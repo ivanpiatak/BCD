@@ -1,73 +1,51 @@
-/* 
- * Do not change Module name 
-*/
-module main;
-
-reg [3:0] bin_in;
-reg clk, rst;
-wire bcd_out;
-
-BCD dut (.bin_in(bin_in), .clk(clk), .rst(rst), .bcd_out(bcd_out));
-
-initial
-    begin
-        bin_in          = 4'd0;
-        clk             = 1'd0;
-        rst             = 1'd0;
-        
-        #4 rst          = 1'd1;
-        #1 rst          = 1'd0;
-        
-        #10 bin_in      = 4'd10;
-        #5 bin_in       = 4'd0;
-        
-        #100 $finish;
-    end
-
-always
-    begin
-    #1 clk <= ~clk;
-    $display ("bin_in=%b->%d cnt=%d tmp_bcd=%d bcd=%d carry=%d", bin_in, bin_in, dut.cnt, dut.tmp_bcd, dut.bcd, dut.carry);
-    end
-    
-endmodule
-
 module BCD (
-    input [3:0] bin_in,
-    input clk,
-    input rst,
-    output bcd_out
+    input [3:0] 	bin_in,
+    input 			clk,
+    input 			rst,
+    output [7:0]	bcd_out
     );
-reg [3:0] tmp_sh;
-reg [3:0] tmp_bcd;
-reg [1:0] cnt;
-wire carry;
-wire [3:0] bcd; 
+
+
+reg [3:0] bin;
+reg [7:0] bcd;
+reg [7:0] dec;
+reg [2:0] cnt;
 
 always @ (posedge clk or posedge rst)
-    if (rst)
-        begin
-            tmp_sh  <= 4'd0;
-            tmp_bcd <= 4'd0;
-            cnt     <= 2'd0;
-        end
-    else
-    begin
-        if (cnt == 2'd3)
-        begin
-            tmp_sh  <= bin_in;
-            tmp_bcd <= 4'd0;
-            cnt     <= 2'd0;
-        end
-        else
-        begin
-            cnt     <= cnt + 2'd1;
-            tmp_sh  <= {tmp_sh[2:0], 1'd0};
-            tmp_bcd <= {bcd[2:0], tmp_sh[3]};
-        end
-    end
+	begin
+		if (rst)
+		begin
+			cnt <= 3'd0;
+			bin <= 4'd0;
+			bcd <= 8'd0;
+			dec <= 8'd0;
+		end
+		else
+		begin
+			cnt <= cnt + 3'd1;
+			if (cnt == 3'd4)
+				begin
+					bin <= bin_in;
+					dec <= bcd;
+					cnt <= 3'd0;
+				end
+			else
+				begin
+					bin <= {bin[2:0], 1'd0};
+						if (bcd[3:0]>4'd4)
+							begin
+							bcd[3:0] <= bcd[3:0]+4'd3;
+							bcd <= {bcd[6:0], bin[3]};
+							end
+						else
+							bcd <= {bcd[6:0], bin[3]};
+					
+				end
+		end
+	end
     
-assign bcd = (tmp_bcd > 4'd4) ? (tmp_bcd + 4'd3) : tmp_bcd;
+assign bcd_out = dec;
+
 endmodule
 
 
