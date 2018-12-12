@@ -1,52 +1,73 @@
 module BCD (
-    input [3:0] 	bin_in,
-    input 			clk,
-    input 			rst,
-    output [7:0]	bcd_out
+    input wire [3:0] bin_in,
+    input wire clk,
+    input wire rst,
+    output reg [3:0] dec_out
     );
+	 
+reg [3:0] bin, bcd;
+reg [2:0] i, state; 
 
-
-reg [3:0] bin;
-reg [7:0] bcd;
-reg [7:0] dec;
-reg [2:0] cnt;
+localparam RESET = 3'd0;
+localparam START = 3'd1;
+localparam SHIFT = 3'd2;
+localparam CHECK = 3'd3;
+localparam ADD	 = 3'd4;
+localparam DONE  = 3'd5;
 
 always @ (posedge clk or posedge rst)
+	if (rst)
+		state <= RESET;
+	else
 	begin
-		if (rst)
-		begin
-			cnt <= 3'd0;
+	state <= START;
+	case (state)
+		RESET:
+			begin
 			bin <= 4'd0;
-			bcd <= 8'd0;
-			dec <= 8'd0;
-		end
-		else
-		begin
-			cnt <= cnt + 3'd1;
-			if (cnt == 3'd4)
+			i <= 3'd0;
+			bcd <= 4'd0;
+			dec_out <= 4'd0;
+			end
+		START:
+			begin
+			bin <= bin_in;
+			bcd <= 4'd0;
+			state <= SHIFT;
+			end
+		SHIFT:
+			begin
+			bin <= {bin [2:0], 1'd0};
+	      bcd <= {bcd [2:0], bin[3]};
+	      i <= i + 3'd1;
+			state <= CHECK;
+			end
+		CHECK:
+			begin
+			if (i > 3'd3)
+				state <= DONE;
+			else
+				state <= ADD;
+			end
+		ADD:
+			begin
+			if (bcd > 4'd4)
 				begin
-					bin <= bin_in;
-					dec <= bcd;
-					cnt <= 3'd0;
+				bcd <= bcd + 4'd3;
+				state <= SHIFT;
 				end
 			else
-				begin
-					bin <= {bin[2:0], 1'd0};
-						if (bcd[3:0]>4'd4)
-							begin
-							bcd[3:0] <= bcd[3:0]+4'd3;
-							bcd <= {bcd[6:0], bin[3]};
-							end
-						else
-							bcd <= {bcd[6:0], bin[3]};
-					
-				end
-		end
+				state <= SHIFT;
+			end
+		DONE:
+			begin
+			dec_out <= bcd;
+			i <= 3'd0;
+			state <= START;
+			end
+		default:
+			state <= RESET;
+		endcase
 	end
-    
-assign bcd_out = dec;
 
 endmodule
-
-
-

@@ -30,14 +30,14 @@ module BCD_TB;
 	reg rst;
 
 	// Outputs
-	wire [7:0] bcd_out;
+	wire [3:0] dec_out;
 
 	// Instantiate the Unit Under Test (UUT)
 	BCD uut (
 		.bin_in(bin_in), 
 		.clk(clk), 
 		.rst(rst), 
-		.bcd_out(bcd_out)
+		.dec_out(dec_out)
 	);
 
 initial
@@ -49,8 +49,8 @@ initial
         #4 rst          = 1'd1;
         #1 rst          = 1'd0;
         
-        #1 bin_in      	= 4'd10;
-        #10 bin_in       = 4'd15;
+        #1 bin_in      	= 4'd11;
+        #10 bin_in      = 4'd15;
         
         #100 $finish;
     end
@@ -58,8 +58,7 @@ initial
 always
     begin
     #1 clk <= ~clk;
-    $display ("bin_in=%b->%d, bin=%b, bcd=%b", bin_in, bin_in, uut.bin, uut.bcd);
+    $display ("i=%d, bcd=%b, bin=%b", uut.i, uut.bcd, uut.bin);
     end
-      
+    
 endmodule
-
