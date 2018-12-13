@@ -11,13 +11,12 @@ reg [2:0] i, state;
 localparam RESET = 3'd0;
 localparam START = 3'd1;
 localparam SHIFT = 3'd2;
-localparam CHECK = 3'd3;
-localparam ADD	 = 3'd4;
-localparam DONE  = 3'd5;
+localparam ADD	 = 3'd3;
+localparam DONE  = 3'd4;
 
 always @ (posedge clk or posedge rst)
 	if (rst)
-		state <= RESET;
+	state <= RESET;
 	else
 	begin
 	state <= START;
@@ -40,13 +39,9 @@ always @ (posedge clk or posedge rst)
 			bin <= {bin [2:0], 1'd0};
 	      bcd <= {bcd [2:0], bin[3]};
 	      i <= i + 3'd1;
-			state <= CHECK;
-			end
-		CHECK:
-			begin
-			if (i > 3'd3)
+				if (i == 3'd3)
 				state <= DONE;
-			else
+				else
 				state <= ADD;
 			end
 		ADD:
