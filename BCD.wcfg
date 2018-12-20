@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Xilinx/PROJECTS/BCD/BCD_TB_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="BCD_TB" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="11" />
+   <wvobject fp_name="/BCD_TB/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/bin_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bin_in[13:0]</obj_property>
+      <obj_property name="ObjectShortName">bin_in[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/uut/i" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">i[3:0]</obj_property>
+      <obj_property name="ObjectShortName">i[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#008080</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/uut/bin" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bin[13:0]</obj_property>
+      <obj_property name="ObjectShortName">bin[13:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/uut/bcd" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bcd[15:0]</obj_property>
+      <obj_property name="ObjectShortName">bcd[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/dec_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">dec_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dec_out[15:0]</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#808000</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/dec_out1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">dec_out1[3:0]</obj_property>
+      <obj_property name="ObjectShortName">dec_out1[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#808000</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/dec_out10" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">dec_out10[3:0]</obj_property>
+      <obj_property name="ObjectShortName">dec_out10[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#808000</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/dec_out100" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">dec_out100[3:0]</obj_property>
+      <obj_property name="ObjectShortName">dec_out100[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#808000</obj_property>
+   </wvobject>
+   <wvobject fp_name="/BCD_TB/dec_out1000" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">dec_out1000[3:0]</obj_property>
+      <obj_property name="ObjectShortName">dec_out1000[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#808000</obj_property>
+   </wvobject>
+</wave_config>

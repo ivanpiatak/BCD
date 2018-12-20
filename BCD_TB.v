@@ -24,13 +24,17 @@
 
 module BCD_TB;
 
+parameter BWIDTH = 14; //must avoid overflow
+parameter DWIDTH  = 16; //must be multiple of 4
+
 	// Inputs
-	reg [3:0] bin_in;
+	reg [BWIDTH-1:0] bin_in;
 	reg clk;
 	reg rst;
 
 	// Outputs
-	wire [3:0] dec_out;
+	wire [DWIDTH-1:0] dec_out;
+	wire [3:0] dec_out1, dec_out10, dec_out100, dec_out1000;
 
 	// Instantiate the Unit Under Test (UUT)
 	BCD uut (
@@ -39,26 +43,32 @@ module BCD_TB;
 		.rst(rst), 
 		.dec_out(dec_out)
 	);
+	
+assign dec_out1 = dec_out[3:0];
+assign dec_out10 = dec_out[7:4];
+assign dec_out100 = dec_out[11:8];
+assign dec_out1000 = dec_out[15:12];
+
 
 initial
     begin
-        bin_in          = 4'd0;
-        clk             = 1'd0;
-        rst             = 1'd0;
+        bin_in          = 'd0;
+        clk             = 'd0;
+        rst             = 'd0;
         
-        #4 rst          = 1'd1;
-        #1 rst          = 1'd0;
+        #4 rst          = 'd1;
+        #1 rst          = 'd0;
         
-        #1 bin_in      	= 4'd11;
-        #10 bin_in      = 4'd15;
+        #1 bin_in      	= 'd11;
+        #10 bin_in      = 'd243;
         
-        #100 $finish;
+        #120 $finish;
     end
 
 always
     begin
     #1 clk <= ~clk;
-    $display ("i=%d, bcd=%b, bin=%b", uut.i, uut.bcd, uut.bin);
+    $display ("bin_in=%b, i=%d, bin=%b, bcd=%b, dec_out=%d%d%d%d", bin_in, uut.i, uut.bin, uut.bcd, dec_out[15:12], dec_out[11:8], dec_out[7:4], dec_out[3:0]);
     end
     
 endmodule
